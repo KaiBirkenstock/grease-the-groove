@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>Let the groove begin</h1>
+
+  <ng-template [ngIf]="state.loaded && state.phase == 'Setup'">
+    <p>Before we start, do as much pull-ups as you can. System will then generate a workout plan for you.</p>
+    <p>For the best results:</p>
+    <ul>
+      <li>do 6 workouts per week (no rest between)</li>
+      <li>rest 1 day at the end of the week</li>
+    </ul>
+
+    <ion-button (click)="startTest()">
+      Start
+    </ion-button>
+  </ng-template>
+
+  <ng-template [ngIf]="state.phase == 'Testing'">
+    <p>Do as much pull-ups as you can at a time</p>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="userConfig.addToMax(-1)">
+            <ion-icon name="remove"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="openMaxInputAlert()">
+            {{ userConfig.currentMax }}
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="userConfig.addToMax(1)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-button (click)="doneTesting()">
+      Done
+    </ion-button>
+  </ng-template>
+
+  <ng-template [ngIf]="state.loaded && state.phase == 'Workout'">
+
+  </ng-template>
+</ion-content>

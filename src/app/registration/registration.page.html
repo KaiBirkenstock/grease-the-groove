@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>Welcome!</h1>
+
+  <ng-template [ngIf]="userProfile">
+    <ion-item>
+      <ion-label>
+        <ion-avatar slot="left">
+          <img [src]="userProfile.photoURL">
+        </ion-avatar>
+        <h2>{{ userProfile.displayName }}</h2>
+        <h3>{{ userProfile.email }}</h3>
+      </ion-label>
+    </ion-item>
+
+    <ion-button (click)="start()">
+      Start using GtG now!
+    </ion-button>
+  </ng-template>
+
+  <ng-template [ngIf]="!userProfile">
+    <h4>Login is only availble via Google right now.</h4>
+
+    <ion-button expand="block" color="danger" (click)="loginWithGoogle()">
+      <ion-icon name="logo-googleplus"></ion-icon>
+      Login with Google+
+    </ion-button>
+  </ng-template>
+</ion-content>
