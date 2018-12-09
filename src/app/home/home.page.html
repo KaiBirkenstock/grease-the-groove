@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Grease the groove</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h1>Let the groove begin</h1>
+  <h1 text-center>Let the groove begin!</h1>
 
   <ng-template [ngIf]="state.loaded && state.phase == 'Setup'">
     <p>Before we start, do as much pull-ups as you can. System will then generate a workout plan for you.</p>
@@ -48,7 +48,19 @@
     </ion-button>
   </ng-template>
 
-  <ng-template [ngIf]="state.loaded && state.phase == 'Workout'">
+  <ng-template [ngIf]="state.loaded && state.phase == 'Workout' && cycle">
+    <p>Your last test was {{cycle.currentMax}} pull up's</p>
 
+    <ng-template [ngIf]="cycle.currentWorkoutDay?.currentSet">
+      <h4>Your workout today will be: {{ cycle.currentWorkoutDay.setsAsText }}</h4>
+
+      <div class="current-set-count">
+        {{ cycle.currentWorkoutDay.currentSet?.reps }}
+      </div>
+
+      <ion-button (click)="cycle.currentWorkoutDay.finishSet()">
+        Done
+      </ion-button>
+    </ng-template>
   </ng-template>
 </ion-content>

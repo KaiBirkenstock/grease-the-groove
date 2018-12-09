@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import moment from 'moment';
+import * as moment from 'dayjs';
 import { environment } from '../../environments/environment';
 
 export class AbstractPage implements OnInit {

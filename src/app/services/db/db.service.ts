@@ -46,7 +46,7 @@ export class DatabaseService {
 
   updateConfig(config: UserConfig) {
     const configRef = this.db.collection('config')
-    .doc(this.user.uid);
+      .doc(this.user.uid);
 
     configRef.set(config.data.toJS());
   }
@@ -75,5 +75,11 @@ export class DatabaseService {
           return Promise.reject(false);
         }
       });
+  }
+
+  clearUserData() {
+    return this.db.collection('config')
+      .doc(this.user.uid)
+      .delete();
   }
 }

@@ -1,5 +1,5 @@
 import { Map, List } from 'immutable';
-import moment from 'moment';
+import * as moment from 'dayjs';
 import { TimeFrame } from './TimeFrame';
 import { Day } from './Day';
 import { WorkoutCycle } from './WorkoutCycle';
@@ -18,7 +18,9 @@ export class UserConfig {
   constructor(data: Map<string, any>, public timeFrame?: TimeFrame) {
     this.data = data;
 
-    this.cycle = new WorkoutCycle(this.data.get('cycle'), timeFrame, this.currentMax);
+    if (this.data.get('date') !== '') {
+      this.buildCycle();
+    }
   }
 
   get currentMax() {
@@ -30,15 +32,33 @@ export class UserConfig {
   }
 
   get date() {
-    return this.data.get('date') === '' ? moment() : moment(this.data.get('date'));
+    return !this.data.get('date') || this.data.get('date') === '' ? null : moment(this.data.get('date'));
   }
 
-  set date(value: moment) {
+  set date(value: any) {
     this.data = this.data.set('date', value);
+
+    this.buildCycle();
   }
 
   get history() {
-    return this.data.get('history') || List();
+    return this.data.get('history') || List();
+  }
+
+  buildCycle() {
+    this.cycle = new WorkoutCycle(this.data.get('cycle'), new TimeFrame(this.date), this.currentMax);
+  }
+
+  updateCycle(cycle: WorkoutCycle) {
+    cycle.data = cycle.data.update('days', days => {
+      return days.map(day => {
+        day.data.sets = day.sets.map(set => {
+          return set.data;
+        });
+        return day.data;
+      });
+    });
+    this.data = this.data.set('cycle', cycle.data);
   }
 
   addCycleToHistory() {

@@ -1,12 +1,13 @@
-import moment from 'moment';
+import * as moment from 'dayjs';
 import { List } from 'immutable';
-import { Day } from './Day';
+
+import { WorkoutDay } from './WorkoutDay';
 
 export class TimeFrame {
   startDate: any;
   endDate: any;
 
-  constructor(startDate: any, private timeEntity: string = 'month') {
+  constructor(startDate: any, private timeEntity: moment.UnitType = 'month') {
     this.startDate = moment(startDate === '' ? new Date() : startDate);
     this.init();
   }
@@ -20,11 +21,12 @@ export class TimeFrame {
     const countDays = this.endDate.endOf('day').diff(this.startDate.startOf('day'), 'days') + 1;
 
     let days = List();
-    for (let i = 0; i < countDays; i++) {
-      const dateMoment = moment(this.startDate).add(i, 'days');
 
-      const date = new Day({
-        date: dateMoment,
+    for (let i = 0; i < countDays; i++) {
+      const dateMoment = moment(this.startDate).add(i, 'day');
+
+      const date = new WorkoutDay({
+        date: dateMoment.toJSON(),
         i18n: dateMoment.format('dddd')
       });
       days = days.push(date);

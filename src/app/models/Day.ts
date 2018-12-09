@@ -1,3 +1,4 @@
+import * as moment from 'dayjs';
 export const dayMapping = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export class Day {
@@ -8,7 +9,7 @@ export class Day {
   }
 
   get date() {
-    return this.data.date;
+    return moment(this.data.date);
   }
 
   get day() {
