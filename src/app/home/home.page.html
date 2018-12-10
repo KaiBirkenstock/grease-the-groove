@@ -49,9 +49,13 @@
   </ng-template>
 
   <ng-template [ngIf]="state.loaded && state.phase == 'Workout' && cycle">
-    <p>Your last test was {{cycle.currentMax}} pull up's</p>
-
-    <ng-template [ngIf]="cycle.currentWorkoutDay?.currentSet">
+    <ng-template [ngIf]="cycle.currentWorkoutDay.isDone">
+      <p>Your work for today is done. Come back tomorrow.</p>
+      
+      <ion-icon name="checkmark" color="green" style="font-size: 10rem;" flex-center></ion-icon>
+    </ng-template>
+    <ng-template [ngIf]="!cycle.currentWorkoutDay.isDone">
+        <p>Your last test was {{cycle.currentMax}} pull up's</p>
       <h4>Your workout today will be: {{ cycle.currentWorkoutDay.setsAsText }}</h4>
 
       <div class="current-set-count">

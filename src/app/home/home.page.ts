@@ -69,8 +69,6 @@ export class HomePage extends AbstractPage implements OnInit {
         this.userConfig.updateCycle(workoutCycle);
         this.db.updateConfig(this.userConfig);
   
-        this.cycle = null;
-  
         this.state.phase = HomePagePhase.Finished;
       });
     }

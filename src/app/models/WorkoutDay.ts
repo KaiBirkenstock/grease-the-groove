@@ -1,11 +1,18 @@
 import { Subject } from 'rxjs';
-import { List } from 'immutable';
+import { List, fromJS } from 'immutable';
 import { Day } from './Day';
 import { WorkoutSet } from './WorkoutSet';
 
 export class WorkoutDay extends Day {
-    sets: List<WorkoutSet> = List();
+    sets: List<WorkoutSet>;
     done: Subject<any> = new Subject();
+
+    constructor(data: any) {
+        super(data.toJS ? data.toJS() : data);
+        console.log(this.data);
+
+        this.sets = this.data.sets ? fromJS(this.data.sets).map(set => new WorkoutSet(set)) : List();
+    }
 
     get isRestDay() {
         return this.data.isRestDay || false;
@@ -16,7 +23,7 @@ export class WorkoutDay extends Day {
     }
 
     get isDone() {
-        return this.data.isDone || false;
+        return !this.sets.find((set: WorkoutSet) => !set.isDone);
     }
 
     set isDone(value: boolean) {

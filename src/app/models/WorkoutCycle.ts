@@ -1,3 +1,4 @@
+import * as moment from 'dayjs';
 import { Map, fromJS } from 'immutable';
 import { TimeFrame } from './TimeFrame';
 import { Day } from './Day';
@@ -31,7 +32,7 @@ export class WorkoutCycle {
     }
 
     get currentWorkoutDay() {
-        return this.workoutDays.find((wd: WorkoutDay) => !wd.isDone);
+        return this.workoutDays.find((wd: WorkoutDay) => wd.date.format('DDMMYYYY') === moment().format('DDMMYYYY'));
     }
 
     buildCycle() {
