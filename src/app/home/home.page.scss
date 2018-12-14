@@ -1,11 +1,24 @@
 .current-set-count {
-    font-size: 8rem;
-    margin: auto;
-    text-align: center;
+  font-size: 8rem;
+  margin: auto;
+  text-align: center;
 }
 
 ion-icon[color=green] {
-    color: green;
-    margin: auto;
-    display: block;
+  color: green;
+  margin: auto;
+  display: block;
+}
+
+ion-grid {
+  ion-row {
+    ion-col {
+      justify-content: center;
+      display: flex;
+
+      &.currentSet {
+        font-weight: bolder;
+      }
+    }
+  }
 }

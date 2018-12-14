@@ -22,9 +22,6 @@ export class RegistrationPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
-    window[this.constructor.name] = this;
-
     this.setState();
   }
 
@@ -48,13 +45,8 @@ export class RegistrationPage implements OnInit {
           console.log(res);
 
           const credentials = firebase.auth.GoogleAuthProvider.credential(null, res.accessToken);
-          firebase.auth().signInWithCredential(credentials)
-            .then(success => {
-              console.log("Firebase success: " + JSON.stringify(success));
-            })
-            .catch(error => console.log("Firebase failure: " + JSON.stringify(error)));
+          firebase.auth().signInWithCredential(credentials);
         })
-        .catch(err => console.error("Error: ", err));
     } else {
       // Using a popup.
       const provider = new firebase.auth.GoogleAuthProvider();
