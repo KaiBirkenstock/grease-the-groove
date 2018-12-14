@@ -1,32 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>
       Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
-  <ng-template [ngIf]="userProfile">
-    <h4>Current login:</h4>
-    <ion-item>
-      <ion-label>
-        <ion-avatar slot="left">
-          <img [src]="userProfile.photoURL">
-        </ion-avatar>
-        <h2>{{ userProfile.displayName }}</h2>
-        <h3>{{ userProfile.email }}</h3>
-      </ion-label>
-    </ion-item>
-  </ng-template>
-
+<ion-content>
+  
   <ion-button color="danger" (click)="clearData()">
     Clear all data
-  </ion-button>
-
-  <ion-button (click)="logout()">
-    Logout
   </ion-button>
 
 </ion-content>

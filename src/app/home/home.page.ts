@@ -64,7 +64,7 @@ export class HomePage extends AbstractPage implements OnInit {
 
     if (this.cycle.currentWorkoutDay) {
       this.cycle.currentWorkoutDay.done.subscribe((total: number) => {
-
+        console.log('total', total);
         const workoutCycle = this.cycle;
         this.userConfig.updateCycle(workoutCycle);
         this.db.updateConfig(this.userConfig);
