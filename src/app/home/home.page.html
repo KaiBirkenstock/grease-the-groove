@@ -1,11 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Grease the groove</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <h1 text-center>Let the groove begin!</h1>
+
+  <ion-spinner center *ngIf="state.loading"></ion-spinner>
 
   <ng-template [ngIf]="state.loaded && state.phase == 'Setup'">
     <p>Before we start, do as much pull-ups as you can. System will then generate a workout plan for you.</p>
@@ -15,7 +17,7 @@
       <li>rest 1 day at the end of the week</li>
     </ul>
 
-    <ion-button (click)="startTest()">
+    <ion-button (click)="startTest()" expand="full">
       Start
     </ion-button>
   </ng-template>
@@ -26,7 +28,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button (click)="userConfig.addToMax(-1)">
+          <ion-button (click)="userConfig.addToMax(-1)" shape="round">
             <ion-icon name="remove"></ion-icon>
           </ion-button>
         </ion-col>
@@ -36,14 +38,14 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="userConfig.addToMax(1)">
+          <ion-button (click)="userConfig.addToMax(1)" shape="round">
             <ion-icon name="add"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-button (click)="doneTesting()">
+    <ion-button (click)="doneTesting()" expand="full">
       Done
     </ion-button>
   </ng-template>
@@ -51,20 +53,26 @@
   <ng-template [ngIf]="state.loaded && state.phase == 'Workout' && cycle">
     <ng-template [ngIf]="cycle.currentWorkoutDay.isDone">
       <p>Your work for today is done. Come back tomorrow.</p>
-      
+
       <ion-icon name="checkmark" color="green" style="font-size: 10rem;" flex-center></ion-icon>
     </ng-template>
     <ng-template [ngIf]="!cycle.currentWorkoutDay.isDone">
-        <p>Your last test was {{cycle.currentMax}} pull up's</p>
-      <h4>Your workout today will be: {{ cycle.currentWorkoutDay.setsAsText }}</h4>
 
       <div class="current-set-count">
         {{ cycle.currentWorkoutDay.currentSet?.reps }}
       </div>
 
-      <ion-button (click)="cycle.currentWorkoutDay.finishSet()">
+      <ion-button (click)="cycle.currentWorkoutDay.finishSet()" style="display: flex; justify-content: center;">
         Done
       </ion-button>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let set of cycle.currentWorkoutDay.sets" [ngClass]="{ 'currentSet': set == cycle.currentWorkoutDay.currentSet }">
+            {{ set.reps }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ng-template>
   </ng-template>
 </ion-content>
